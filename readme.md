@@ -1,4 +1,4 @@
-# Essentials-Folia
+# EssentialsR
 
 This repository is a fork of [EssentialsX-Folia](https://github.com/Euphillya/Essentials-Folia) specifically modified to work with RaionBowCreation Network.
 
