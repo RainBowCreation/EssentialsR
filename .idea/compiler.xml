@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="net.essentialsx.EssentialsXParent.EssentialsX.main~1" target="1.8" />
+      <module name="net.essentialsx.EssentialsXParent.EssentialsX.test~1" target="1.8" />
+      <module name="net.essentialsx.EssentialsXParent.EssentialsXAntiBuild.main~1" target="1.8" />
+      <module name="net.essentialsx.EssentialsXParent.EssentialsXAntiBuild.test~1" target="1.8" />
+      <module name="net.essentialsx.EssentialsXParent.EssentialsXChat.main~1" target="1.8" />
+      <module name="net.essentialsx.EssentialsXParent.EssentialsXChat.test~1" target="1.8" />
+      <module name="net.essentialsx.EssentialsXParent.EssentialsXDiscord.main~1" target="1.8" />
+      <module name="net.essentialsx.EssentialsXParent.EssentialsXDiscord.test~1" target="1.8" />
+      <module name="net.essentialsx.EssentialsXParent.EssentialsXDiscordLink.main~1" target="1.8" />
+      <module name="net.essentialsx.EssentialsXParent.EssentialsXDiscordLink.test~1" target="1.8" />
+      <module name="net.essentialsx.EssentialsXParent.EssentialsXGeoIP.main~1" target="1.8" />
+      <module name="net.essentialsx.EssentialsXParent.EssentialsXGeoIP.test~1" target="1.8" />
+      <module name="net.essentialsx.EssentialsXParent.EssentialsXProtect.main~1" target="1.8" />
+      <module name="net.essentialsx.EssentialsXParent.EssentialsXProtect.test~1" target="1.8" />
+      <module name="net.essentialsx.EssentialsXParent.EssentialsXSpawn.main~1" target="1.8" />
+      <module name="net.essentialsx.EssentialsXParent.EssentialsXSpawn.test~1" target="1.8" />
+      <module name="net.essentialsx.EssentialsXParent.EssentialsXXMPP.main~1" target="1.8" />
+      <module name="net.essentialsx.EssentialsXParent.EssentialsXXMPP.test~1" target="1.8" />
+      <module name="net.essentialsx.EssentialsXParent.providers.1_12Provider.main~1" target="1.8" />
+      <module name="net.essentialsx.EssentialsXParent.providers.1_12Provider.test~1" target="1.8" />
+      <module name="net.essentialsx.EssentialsXParent.providers.1_8Provider.main~1" target="1.8" />
+      <module name="net.essentialsx.EssentialsXParent.providers.1_8Provider.test~1" target="1.8" />
+      <module name="net.essentialsx.EssentialsXParent.providers.BaseProviders.main~1" target="1.8" />
+      <module name="net.essentialsx.EssentialsXParent.providers.BaseProviders.test~1" target="1.8" />
+      <module name="net.essentialsx.EssentialsXParent.providers.NMSReflectionProvider.main~1" target="1.8" />
+      <module name="net.essentialsx.EssentialsXParent.providers.NMSReflectionProvider.test~1" target="1.8" />
+      <module name="net.essentialsx.EssentialsXParent.providers.PaperProvider.main~1" target="1.8" />
+      <module name="net.essentialsx.EssentialsXParent.providers.PaperProvider.test~1" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

@@ -1,3 +1,6 @@
 [submodule "Essentials"]
 	path = Essentials
 	url = https://github.com/EssentialsX/Essentials
+[submodule "core"]
+    path = core
+    url = https://github.com/RainBowCreation/core

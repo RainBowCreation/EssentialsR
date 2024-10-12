@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Définition des chemins
+# Define paths
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 REPO_DIR="$SCRIPT_DIR/Essentials"
 REPO_DIR_PATCH="$SCRIPT_DIR/Essentials-Patchs"
@@ -8,34 +8,41 @@ REPO_URL="https://github.com/EssentialsX/Essentials"
 PATCHES_DIR="$SCRIPT_DIR/patches/plugins"
 BRANCH_GIT="2.x"
 
-# S'assurer que le répertoire des patches existe
+# core paths
+CORE_REPO_DIR="$SCRIPT_DIR/core"
+CORE_REPO_DIR_PATCH="$SCRIPT_DIR/core-Patchs"
+CORE_REPO_URL="https://github.com/RainBowCreation/core"
+CORE_PATCHES_DIR="$SCRIPT_DIR/patches/core"
+
+# Make sure the patches directory exists
 mkdir -p "$PATCHES_DIR"
 
-# Fonction pour recloner le dépôt
 reclone_repo() {
-    echo "Suppression des dépôts locaux..."
+    echo "Deleting local repo..."
     rm -rf "$REPO_DIR"
+    rm -rf "$CORE_REPO_DIR"
     rm -rf "$REPO_DIR_PATCH"
-    echo "Clonage du dépôt..."
+    rm -rf "$CORE_REPO_DIR_PATCH"
+
+    echo "Cloning repo..."
     git clone "$REPO_URL" "$REPO_DIR"
-    echo "Le dépôt a été recloné."
-    echo "Début de la copie du code"
+    git clone "$CORE_REPO_URL" "$CORE_REPO_DIR"
+    echo "Copying repo to patch directory.."
     cp -r "$REPO_DIR" "$REPO_DIR_PATCH"
-    echo "Les patches peuvent être appliqués"
+    cp -r "$CORE_REPO_DIR" "$CORE_REPO_DIR_PATCH"
+    echo "Repo updated!, ready to applyPatches"
 }
 
-# Fonction pour créer des patches
 create_patches() {
     cd "$REPO_DIR_PATCH" || exit
-    echo "Création des patches..."
+    echo "Creating patches..."
     git format-patch -o "$PATCHES_DIR" origin/$BRANCH_GIT
-    echo "Les patches ont été créés dans $REPO_DIR_PATCH"
+    echo "Patches created at $REPO_DIR_PATCH"
 }
 
-# Fonction pour appliquer des patches
 apply_patches() {
     cd "$REPO_DIR_PATCH" || exit
-    echo "Application des patches..."
+    echo "Applying patches..."
     for patch in "$PATCHES_DIR"/*.patch; do
         git apply "$patch"
         patch_name=$(basename "$patch" .patch)
@@ -43,11 +50,11 @@ apply_patches() {
         patch_description=$(echo "$patch_description" | sed 's/-/ /g')
         git add .
         git commit -m "$patch_description"
-        echo "Patch \"$patch_description\" appliqué."
+        echo "Patch \"$patch_description\" applied!"
     done
 }
 
-# Vérification des arguments pour choisir l'action
+# Args validator
 case "$1" in
     updateUpstream)
         reclone_repo
@@ -59,13 +66,13 @@ case "$1" in
         apply_patches
         ;;
     *)
-        echo "Utilisation possible du script:
+        echo "Function available on this script:
             $0 updateUpstream
-                Permet de mettre à jour le code source en supprimant et en reclonant le dossier source
+                Allows to update the source code by deleting and recloning the source folder
             $0 createPatches
-                Permet de créer les patches
+                Allows you to create patches
             $0 applyPatches
-                Permet d'appliquer les patches"
+                Allows you to apply patches"
         exit 1
         ;;
 esac
