@@ -1,4 +1,5 @@
 # EssentialsR
+![Alt](https://repobeats.axiom.co/api/embed/1a1072d5fae9ea3f21576f4002b1715137928923.svg "Repobeats analytics image")
 
 This repository is a fork of [EssentialsX-Folia](https://github.com/Euphillya/Essentials-Folia) specifically modified to work with RaionBowCreation Network.
 
