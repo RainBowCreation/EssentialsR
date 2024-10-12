@@ -1,6 +1,6 @@
 # Essentials-Folia
 
-This repository is a fork of [EssentialsX](https://github.com/EssentialsX/Essentials) specifically modified to work with Folia. The main difference lies in the use of a patch file to apply the necessary changes. This guide will explain how to set up, use, and maintain this fork.
+This repository is a fork of [EssentialsX-Folia](https://github.com/Euphillya/Essentials-Folia) specifically modified to work with RaionBowCreation Network.
 
 ## Prerequisites
 
@@ -12,7 +12,7 @@ Before starting, make sure you have the following tools installed on your system
 
 ## Download
 
-You can download the plugins here: https://github.com/Euphillya/Essentials-Folia/actions
+You can download the plugins here: https://github.com/RainBowCreation/EssentialsR/actions
 
 ## Installation
 
@@ -21,8 +21,8 @@ You can download the plugins here: https://github.com/Euphillya/Essentials-Folia
 Clone this repository to your local machine:
 
 ```bash
-git clone https://github.com/Euphillya/Essentials-Folia.git
-cd Essentials-Folia
+git clone https://github.com/RainBowCreation/EssentialsR.git
+cd EssentialsR
 ```
 
 ### Using the Script
@@ -39,8 +39,11 @@ To update the source code by deleting and recloning the original EssentialsX rep
 
 This command will:
 1. Remove the local directories `Essentials` and `Essentials-Patchs`.
-2. Re-clone the `EssentialsX` repository into the `Essentials` directory.
-3. Copy the contents of `Essentials` to `Essentials-Patchs`.
+2. Remove the local directories `core` and `core-Patchs`.
+3. Re-clone the `EssentialsX` repository into the `Essentials` directory.
+4. Re-clone the `core` repository into the `core` directory.
+5. Copy the contents of `Essentials` to `Essentials-Patchs`.
+6. Copy the contents of `core` to `core-Patchs`.
 
 ### Create Patches
 
@@ -81,7 +84,7 @@ If you wish to contribute to this project, please follow these steps:
 
 ## Help
 
-For any questions or issues, feel free to open an [issue](https://github.com/Euphillya/Essentials-Folia/issues).
+For any questions or issues, feel free to open an [issue](https://github.com/RainBowCreation/EssentialsR/issues).
 
 ## License
 
