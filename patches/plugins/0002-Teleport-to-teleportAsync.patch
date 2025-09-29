@@ -1,17 +1,17 @@
-From 143840bf9c583c3ab408cecc09e74a0cc8adb057 Mon Sep 17 00:00:00 2001
+From fc194b9a7bd34095f419faf9272329c5fc907610 Mon Sep 17 00:00:00 2001
 From: Euphyllia Bierque <bierque.euphyllia@gmail.com>
-Date: Wed, 2 Oct 2024 11:15:20 +0200
-Subject: [PATCH 2/9] Teleport to teleportAsync
+Date: Sun, 28 Sep 2025 16:21:48 +0200
+Subject: [PATCH 02/14] Teleport to teleportAsync
 
 ---
  .../main/java/com/earth2me/essentials/AsyncTeleport.java | 9 +++++----
  1 file changed, 5 insertions(+), 4 deletions(-)
 
 diff --git a/Essentials/src/main/java/com/earth2me/essentials/AsyncTeleport.java b/Essentials/src/main/java/com/earth2me/essentials/AsyncTeleport.java
-index a4f40daf7..906fb044c 100644
+index fc98e97e1..10a16d6ab 100644
 --- a/Essentials/src/main/java/com/earth2me/essentials/AsyncTeleport.java
 +++ b/Essentials/src/main/java/com/earth2me/essentials/AsyncTeleport.java
-@@ -141,6 +141,7 @@ public class AsyncTeleport implements IAsyncTeleport {
+@@ -140,6 +140,7 @@ public class AsyncTeleport implements IAsyncTeleport {
      }
  
      private void runOnMain(final Runnable runnable) throws ExecutionException, InterruptedException {
@@ -19,35 +19,35 @@ index a4f40daf7..906fb044c 100644
          if (Bukkit.isPrimaryThread()) {
              runnable.run();
              return;
-@@ -170,8 +171,8 @@ public class AsyncTeleport implements IAsyncTeleport {
+@@ -169,8 +170,8 @@ public class AsyncTeleport implements IAsyncTeleport {
              }
  
              try {
 -                runOnMain(() -> teleportee.getBase().eject()); //EntityDismountEvent requires a sync context.
 -            } catch (final ExecutionException | InterruptedException e) {
 +                teleportee.getBase().getScheduler().run(ess, (scheduledTask) -> teleportee.getBase().eject(), null); //EntityDismountEvent requires a sync context. // Euphyllia
-+            } catch (Exception e) { // Euphyllia
++            } catch (final Exception e) {
                  future.completeExceptionally(e);
                  return;
              }
-@@ -192,7 +193,7 @@ public class AsyncTeleport implements IAsyncTeleport {
+@@ -191,7 +192,7 @@ public class AsyncTeleport implements IAsyncTeleport {
                  if (ess.getSettings().isTeleportSafetyEnabled()) {
                      if (ess.getSettings().isForceDisableTeleportSafety()) {
                          //The chunk we're teleporting to is 100% going to be loaded here, no need to teleport async.
 -                        teleportee.getBase().teleport(loc, cause);
-+                        teleportee.getBase().teleportAsync(loc, cause); // Euphyllia
++                        teleportee.getBase().teleportAsync(loc, cause);
                      } else {
                          try {
                              //There's a chance the safer location is outside the loaded chunk so still teleport async here.
-@@ -209,7 +210,7 @@ public class AsyncTeleport implements IAsyncTeleport {
+@@ -208,7 +209,7 @@ public class AsyncTeleport implements IAsyncTeleport {
              } else {
                  if (ess.getSettings().isForceDisableTeleportSafety()) {
                      //The chunk we're teleporting to is 100% going to be loaded here, no need to teleport async.
 -                    teleportee.getBase().teleport(loc, cause);
-+                    teleportee.getBase().teleportAsync(loc, cause); // Euphyllia
++                    teleportee.getBase().teleportAsync(loc, cause);
                  } else {
                      if (ess.getSettings().isTeleportToCenterLocation()) {
                          loc = LocationUtil.getRoundedDestination(loc);
 -- 
-2.45.1.windows.1
+2.50.1.windows.1
 

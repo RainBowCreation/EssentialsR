@@ -1,7 +1,7 @@
-From 3efb4d6511de245d6831dc63887ee84f8de16963 Mon Sep 17 00:00:00 2001
+From 1faf257928f79458f6dae90674e00f0c07918f14 Mon Sep 17 00:00:00 2001
 From: Euphyllia Bierque <bierque.euphyllia@gmail.com>
-Date: Wed, 2 Oct 2024 11:15:20 +0200
-Subject: [PATCH 3/9] Replace BukkitRunnable to FoliaRunnable
+Date: Sun, 28 Sep 2025 16:21:48 +0200
+Subject: [PATCH 03/14] Replace BukkitRunnable to FoliaRunnable
 
 ---
  .../essentials/api/FoliaRunnable.java         | 271 ++++++++++++++++++
@@ -11,7 +11,7 @@ Subject: [PATCH 3/9] Replace BukkitRunnable to FoliaRunnable
 
 diff --git a/Essentials/src/main/java/com/earth2me/essentials/api/FoliaRunnable.java b/Essentials/src/main/java/com/earth2me/essentials/api/FoliaRunnable.java
 new file mode 100644
-index 000000000..00ae5275f
+index 000000000..aef3baf48
 --- /dev/null
 +++ b/Essentials/src/main/java/com/earth2me/essentials/api/FoliaRunnable.java
 @@ -0,0 +1,271 @@
@@ -286,20 +286,21 @@ index 000000000..00ae5275f
 +        return this.task = task;
 +    }
 +}
+\ No newline at end of file
 diff --git a/Essentials/src/main/java/com/earth2me/essentials/commands/Commandessentials.java b/Essentials/src/main/java/com/earth2me/essentials/commands/Commandessentials.java
-index eede838da..24a54e272 100644
+index fa97ff2ff..09c710b3f 100644
 --- a/Essentials/src/main/java/com/earth2me/essentials/commands/Commandessentials.java
 +++ b/Essentials/src/main/java/com/earth2me/essentials/commands/Commandessentials.java
-@@ -505,7 +505,7 @@ public class Commandessentials extends EssentialsCommand {
+@@ -509,7 +509,7 @@ public class Commandessentials extends EssentialsCommand {
          }
  
          currentTune = new TuneRunnable(NYAN_TUNE, NOTE_HARP, ess::getOnlinePlayers);
 -        currentTune.runTaskTimer(ess, 20, 2);
-+        currentTune.runAtFixedRate(ess, 20, 2);
++        currentTune.runAtFixedRate(ess, 20, 2);  // Euphyllia
      }
  
      // Cow farts.
-@@ -900,7 +900,7 @@ public class Commandessentials extends EssentialsCommand {
+@@ -904,7 +904,7 @@ public class Commandessentials extends EssentialsCommand {
          return Collections.emptyList();
      }
  
@@ -308,7 +309,7 @@ index eede838da..24a54e272 100644
          private static final Map<String, Float> noteMap = ImmutableMap.<String, Float>builder()
              .put("1F#", 0.5f)
              .put("1G", 0.53f)
-@@ -934,6 +934,7 @@ public class Commandessentials extends EssentialsCommand {
+@@ -938,6 +938,7 @@ public class Commandessentials extends EssentialsCommand {
          private int i = 0;
  
          TuneRunnable(final String tuneStr, final Sound sound, final Supplier<Collection<Player>> players) {
@@ -317,5 +318,5 @@ index eede838da..24a54e272 100644
              this.sound = sound;
              this.players = players;
 -- 
-2.45.1.windows.1
+2.50.1.windows.1
 

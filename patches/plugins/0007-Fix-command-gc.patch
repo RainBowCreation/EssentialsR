@@ -1,30 +1,50 @@
-From 78dda61cf69509d43acb483f97fff2da602ae312 Mon Sep 17 00:00:00 2001
+From 8d6ef37b220b4a7b830bf5e5821e181d1751de13 Mon Sep 17 00:00:00 2001
 From: Euphyllia Bierque <bierque.euphyllia@gmail.com>
-Date: Wed, 2 Oct 2024 11:15:21 +0200
-Subject: [PATCH 7/9] Fix command gc
+Date: Sun, 28 Sep 2025 16:21:50 +0200
+Subject: [PATCH 07/14] Fix command gc
 
 ---
- .../com/earth2me/essentials/commands/Commandgc.java   | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ .../essentials/commands/Commandgc.java        | 24 +++++++++++++++----
+ 1 file changed, 20 insertions(+), 4 deletions(-)
 
 diff --git a/Essentials/src/main/java/com/earth2me/essentials/commands/Commandgc.java b/Essentials/src/main/java/com/earth2me/essentials/commands/Commandgc.java
-index 16082f3c9..98b79b880 100644
+index 16082f3c9..10c36225d 100644
 --- a/Essentials/src/main/java/com/earth2me/essentials/commands/Commandgc.java
 +++ b/Essentials/src/main/java/com/earth2me/essentials/commands/Commandgc.java
-@@ -47,17 +47,20 @@ public class Commandgc extends EssentialsCommand {
+@@ -37,6 +37,11 @@ public class Commandgc extends EssentialsCommand {
+ 
+         final List<World> worlds = server.getWorlds();
+         for (final World w : worlds) {
++            final java.util.concurrent.atomic.AtomicInteger tileEntities = new java.util.concurrent.atomic.AtomicInteger();
++            final java.util.concurrent.atomic.AtomicInteger entities = new java.util.concurrent.atomic.AtomicInteger(0);
++            final List<java.util.concurrent.CompletableFuture<Void>> futures = new java.util.ArrayList<>();
++            final int chunkLoadedLength = w.getLoadedChunks().length;
++            final String worldName = w.getName();
+             String worldType = "World";
+             switch (w.getEnvironment()) {
+                 case NETHER:
+@@ -46,18 +51,29 @@ public class Commandgc extends EssentialsCommand {
+                     worldType = "The End";
                      break;
              }
- 
--            int tileEntities = 0;
 -
-+            final java.util.concurrent.atomic.AtomicInteger tileEntities = new java.util.concurrent.atomic.AtomicInteger();
-+            final java.util.concurrent.atomic.AtomicInteger entitiesSize = new java.util.concurrent.atomic.AtomicInteger(0);
+-            int tileEntities = 0;
++            final String worldTypeFinal = worldType;
+ 
              try {
                  for (final Chunk chunk : w.getLoadedChunks()) {
 -                    tileEntities += chunk.getTileEntities().length;
-+                    org.bukkit.Bukkit.getRegionScheduler().run(ess, chunk.getWorld(), chunk.getX(), chunk.getZ(), scheduledTask -> {
-+                        tileEntities.addAndGet(chunk.getTileEntities().length);
-+                        entitiesSize.addAndGet(chunk.getEntities().length);
++                    final java.util.concurrent.CompletableFuture<Void> future = new java.util.concurrent.CompletableFuture<>();
++                    futures.add(future);
++                    ess.getRegionScheduler().execute(ess, chunk.getWorld(), chunk.getX(), chunk.getZ(), () -> {
++                        try {
++                            tileEntities.addAndGet(chunk.getTileEntities().length);
++                            entities.addAndGet(chunk.getEntities().length);
++                        } catch (final java.lang.ClassCastException ex) {
++                            ess.getLogger().log(Level.SEVERE, "Corrupted chunk data on world " + w, ex);
++                        } finally {
++                            future.complete(null);
++                        }
 +                    });
                  }
              } catch (final java.lang.ClassCastException ex) {
@@ -32,10 +52,11 @@ index 16082f3c9..98b79b880 100644
              }
  
 -            sender.sendTl("gcWorld", worldType, w.getName(), w.getLoadedChunks().length, w.getEntities().size(), tileEntities);
-+            sender.sendTl("gcWorld", worldType, w.getName(), w.getLoadedChunks().length, entitiesSize.get(), tileEntities.get());
++            java.util.concurrent.CompletableFuture.allOf(futures.toArray(new java.util.concurrent.CompletableFuture[0])).thenRunAsync(() ->
++                    sender.sendTl("gcWorld", worldTypeFinal, worldName, chunkLoadedLength, entities.get(), tileEntities.get()));
          }
      }
  }
 -- 
-2.45.1.windows.1
+2.50.1.windows.1
 

@@ -1,0 +1,33 @@
+From a2086481dcc12ac5e65e971194a1dbb468dd8e95 Mon Sep 17 00:00:00 2001
+From: Euphyllia Bierque <bierque.euphyllia@gmail.com>
+Date: Sun, 28 Sep 2025 16:21:51 +0200
+Subject: [PATCH 10/14] Fix commands thor player
+
+---
+ .../com/earth2me/essentials/commands/Commandlightning.java     | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/Essentials/src/main/java/com/earth2me/essentials/commands/Commandlightning.java b/Essentials/src/main/java/com/earth2me/essentials/commands/Commandlightning.java
+index a8a53db62..89e89dead 100644
+--- a/Essentials/src/main/java/com/earth2me/essentials/commands/Commandlightning.java
++++ b/Essentials/src/main/java/com/earth2me/essentials/commands/Commandlightning.java
+@@ -33,6 +33,7 @@ public class Commandlightning extends EssentialsLoopCommand {
+         }
+         final int finalPower = power;
+         loopOnlinePlayersConsumer(server, sender, false, true, args[0], player -> {
++            final org.bukkit.entity.Player realPlayer = player.getBase(); realPlayer.getScheduler().run(ess, task -> {
+             sender.sendTl("lightningUse", player.getDisplayName());
+             final LightningStrike strike = player.getBase().getWorld().strikeLightningEffect(player.getBase().getLocation());
+ 
+@@ -41,7 +42,7 @@ public class Commandlightning extends EssentialsLoopCommand {
+             }
+             if (ess.getSettings().warnOnSmite()) {
+                 player.sendTl("lightningSmited");
+-            }
++            }}, null);
+         });
+         loopOnlinePlayers(server, sender, true, true, args[0], null);
+     }
+-- 
+2.50.1.windows.1
+

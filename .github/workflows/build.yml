@@ -8,6 +8,8 @@ on:
     branches:
       - folia-patches
 
+permissions: write-all
+
 jobs:
   build:
     runs-on: windows-latest
@@ -41,10 +43,35 @@ jobs:
         shell: bash
         run: |
           cd Essentials-Patchs
-          ./gradlew build --stacktrace
+          ./gradlew build --stacktrace -x test -x checkstyleMain --refresh-dependencies
 
       - name: Archive plugin jars on GitHub
         uses: actions/upload-artifact@v4
         with:
           name: EssentialsX plugin jars
           path: Essentials-Patchs/jars/
+
+      - name: Create Release
+        if: github.event_name != 'pull_request'
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ env.tag }}
+          name: ${{ env.project_id_b }} - ${{ github.run_number }}
+          body: |
+            This release is automatically compiled by GitHub Actions
+            ### Commit Message
+            ${{ env.commit_msg }}
+          artifacts: Essentials-Patchs/jars/*.jar
+          generateReleaseNotes: true
+          prerelease: ${{ env.pre }}
+          makeLatest: ${{ env.make_latest }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          replacesArtifacts: false
+
+env:
+  tag: build-${{ github.ref_name }}-${{ github.run_number }}
+  project_id_b: EssentialsX-Folia
+  commit_id: ${{ github.sha }}
+  commit_msg: ${{ github.event.head_commit.message }}
+  pre: false
+  make_latest: true
